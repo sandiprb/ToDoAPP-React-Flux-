@@ -1,0 +1,44 @@
+@import "_settings.css";
+@import "_bootstrap-grid.css";
+
+
+body{
+	background-color: #f1f1f1;
+	font-family: $font-family;
+	font-size: 14px;
+	line-height: 1.6em;
+}
+
+#app{
+	width: 500px;
+	margin: 20px auto;
+	padding: 20px;
+}
+
+.list{
+	padding-left: 0px;
+	list-style-type: none;
+}
+.list__item{
+	background-color: #fff;
+	padding: 12px 8px; 
+	width: 300px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid #ddd;
+	&.item__pending{
+		color: red
+	}
+	&.item__done{
+		color: green
+	}
+}
+.btn__close{
+	background-color: #ddd;
+	border-radius: 50%;
+	border: 1px solid #ddd;
+	width: 26px;
+	height: 26px;
+	&:focus{
+		outline: none;
+	}
+}

@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
-var rename = require('gulp-rename');
 var atImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 
@@ -14,13 +13,12 @@ gulp.task('build', function() {
 	require('css-mqpacker'),
 	autoprefixer({browsers: ['last 2 version']}),
 	];
-	return gulp.src('./app/static/pcss/[^_]*.pcss')
+	return gulp.src('./app/static/pcss/[^_]*.css')
 	.pipe(postcss(processors))
-	.pipe(rename({extname: '.css'}))
-	.pipe(gulp.dest('./app/static/build/css'))
+	.pipe(gulp.dest('./app/static/build/'))
 	});
 
 
 gulp.task('default', ['build'] , function () {
-	gulp.watch(['./app/pcss/*.pcss'],['build']);
+	gulp.watch(['./app/static/pcss/*.css'],['build']);
 	});

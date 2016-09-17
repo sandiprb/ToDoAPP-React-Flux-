@@ -15,10 +15,10 @@ module.exports = {
 	entry: STATIC_DIR + '/js/index.jsx',
 
 	output: {
-		path: STATIC_DIR + '/build/js',
+		path: STATIC_DIR + '/build/',
 		filename: 'app.js',
 		chunkFilename: '[name].[chunkhash].js',
-		publicPath: '/app/build/'
+		publicPath: '/app/static/build/'
 	},
 
 	module:{
@@ -31,7 +31,7 @@ module.exports = {
 	new ChunkManifestPlugin({
 		filename: 'chunk-manifest.json',
 		manifestVariable: 'webpackManifest'
-	}),
+	})
 	] : [new webpack.optimize.OccurenceOrderPlugin(),
 	new webpack.optimize.DedupePlugin(),
 	new webpack.optimize.OccurenceOrderPlugin(),
