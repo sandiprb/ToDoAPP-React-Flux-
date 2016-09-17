@@ -1,31 +1,17 @@
 import {EventEmitter} from 'events';
 import dispatcher from '../dispatcher/dispatcher'
-
+import API from './API'
 
 class TodoStore extends EventEmitter{
 	constructor(){
 		super();
-		this.todos =  [{
-			title: "Learn React",
-			isComplete: true,
-			id: "1"
-		},{
-			title: "Create APP",
-			isComplete: false,
-			id: "2"
-		},{
-			title: "Learn Redux",
-			isComplete: false,
-			id: "3"
-		},{
-			title: "Get shit done",
-			isComplete: false,
-			id: "4"
-		},{
-			title: "Do epic shit",
-			isComplete: false,
-			id: "5"
-		}];
+		this.todos =  API.getTodos();
+	}
+
+	loadTodos(data){
+		this.todos = data;
+
+		this.emit("change");
 	}
 
 	createTodo(title){
@@ -51,8 +37,11 @@ class TodoStore extends EventEmitter{
 	}
 
 	handleAction(action){
-		console.log(action);
 		switch (action.type){
+			case "LOAD_TODO": {
+				this.loadTodos(action.data)
+			}
+			break;
 			case "CREATE_TODO": {
 				this.createTodo(action.title)
 			}
