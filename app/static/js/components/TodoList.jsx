@@ -5,6 +5,8 @@ class TodoList extends React.Component {
 	constructor(){
 		super();
 	}
+
+
 	render(){
 		let todos = this.props.todos;
 		const TodoComponent = !todos ? null : todos.map((todo, index) => ( <TodoListItem key={index} {...todo} /> ));

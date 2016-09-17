@@ -49,6 +49,7 @@
     ]
   },
   "dependencies": {
+    "flux": "^2.1.1",
     "superagent": "^2.2.0"
   }
 }

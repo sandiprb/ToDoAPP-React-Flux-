@@ -1,5 +1,6 @@
 @import "_settings.css";
 @import "_bootstrap-grid.css";
+@import "_app-custom.css";
 
 
 body{
@@ -10,7 +11,7 @@ body{
 }
 
 #app{
-	width: 500px;
+	width: 400px;
 	margin: 20px auto;
 	padding: 20px;
 }
@@ -22,7 +23,6 @@ body{
 .list__item{
 	background-color: #fff;
 	padding: 12px 8px; 
-	width: 300px;
 	margin-bottom: 8px;
 	border-bottom: 1px solid #ddd;
 	&.item__pending{
