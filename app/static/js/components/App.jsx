@@ -12,6 +12,7 @@ import ToDoActions from '../actions/ToDoActions.js';
 class App extends React.Component {
 	constructor(){
 		super();
+		this.getTodos = this.getTodos.bind(this);
 		this.state = {
 			todos : TodoStore.getTodos()
 
@@ -19,26 +20,27 @@ class App extends React.Component {
 	}
 
 	componentWillMount(){
-		TodoStore.on('change', () => {
-			this.setState({
-				//update store whenever the store changes
-				todos: TodoStore.getTodos()
-			})
-		});
+		TodoStore.on('change', this.getTodos);
 	}
 
-	createToDo(){
-		ToDoActions.createTodo(Date.now());
+	componentWillUnmount(){
+		TodoStore.removeListener('change', this.getTodos);
+	}
+
+	getTodos(){
+		this.setState({
+			todos: TodoStore.getTodos()
+		})
 	}
 
 	render(){
 
 		return (
 			<div>
-				<TodoForm />
-				<TodoList todos={this.state.todos} />
+			<TodoForm />
+			<TodoList todos={this.state.todos} />
 			</div>
-		);
+			);
 	}
 }
 

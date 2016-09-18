@@ -2,38 +2,43 @@ import {EventEmitter} from 'events';
 import dispatcher from '../dispatcher/dispatcher'
 import API from './API'
 
+var _todos =  []
+
 class TodoStore extends EventEmitter{
-	constructor(){
-		super();
-		this.todos =  API.getTodos();
-	}
-
-	loadTodos(data){
-		this.todos = data;
-
-		this.emit("change");
-	}
 
 	createTodo(title){
-		const id = this.todos.length;
-		this.todos.push({
+		let todo = {
 			title,
-			isComplete: false,
-			id
-		})
-
-		this.emit("change");
+			isComplete: false
+		}
+		API.createTodo(todo, (function(data){
+			if(_todos.length){
+				_todos.push(data)
+			}else{
+				_todos = [];
+				_todos.push(data)
+			}
+			this.emit("change");
+		}).bind(this))
 	}
 
-	completeTodo(toId){
-		let todoToComplete = this.todos.find(x=> x.id === toId)
-		todoToComplete.isComplete = true;
+	deleteTodo(id){
+		API.deleteTodo(id, (function(id){
+			let todoToComplete = _todos.find(x=> x.id === id)
+			_todos.pop(todoToComplete);
+			this.emit("change");
+		}).bind(this));
+	}
 
-		this.emit("change");
+	loadTodos(){
+		API.getTodos((function(data){
+			_todos = data;
+			this.emit("change");
+		}).bind(this));
 	}
 
 	getTodos(){
-		return this.todos;
+		return _todos;
 	}
 
 	handleAction(action){
@@ -46,8 +51,8 @@ class TodoStore extends EventEmitter{
 				this.createTodo(action.title)
 			}
 			break;
-			case "COMPLETE_TODO":{
-				this.completeTodo(action.id)
+			case "DELETE_TODO":{
+				this.deleteTodo(action.id)
 			}
 			break;
 		}

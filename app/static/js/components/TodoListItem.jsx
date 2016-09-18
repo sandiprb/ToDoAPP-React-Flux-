@@ -8,7 +8,7 @@ class TodoListItem extends React.Component {
 		this.state = {}
 	}
 
-	comepleteTodo(id){
+	removeTodo(id){
 		ToDoActions.completeTodo(id)
 	}
 
@@ -20,7 +20,7 @@ class TodoListItem extends React.Component {
 				<div>
 				{todo.title}
 				<button className="btn__close pull-right"
-					onClick={this.comepleteTodo.bind(this, todo.id)}> x </button>
+					onClick={this.removeTodo.bind(this, todo.id)}> x </button>
 				</div> :
 				<div> {todo.title} </div>
 			}

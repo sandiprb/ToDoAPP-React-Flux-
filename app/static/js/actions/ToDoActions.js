@@ -15,7 +15,7 @@ const ToDoActions = {
 	},
 	completeTodo: function (id){
 		dispatcher.dispatch({
-			type: 'COMPLETE_TODO',
+			type: 'DELETE_TODO',
 			id,
 		})
 	}
