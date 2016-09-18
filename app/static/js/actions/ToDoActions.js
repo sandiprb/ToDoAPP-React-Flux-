@@ -1,10 +1,9 @@
 import dispatcher from '../dispatcher/dispatcher';
 
 const ToDoActions = {
-	loadTodos: function (data) {
+	loadTodos: function () {
 		dispatcher.dispatch({
-			type: 'LOAD_TODO',
-			data,
+			type: 'LOAD_TODO'
 		})
 	},
 	createTodo: function (title) {
@@ -13,7 +12,13 @@ const ToDoActions = {
 			title,
 		})
 	},
-	completeTodo: function (id){
+	updateTodo: function (data){
+		dispatcher.dispatch({
+			type: 'UPDATE_TODO',
+			data
+		})
+	},
+	deleteToDo: function (id){
 		dispatcher.dispatch({
 			type: 'DELETE_TODO',
 			id,

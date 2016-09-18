@@ -17,7 +17,7 @@ const API = {
 			}
 		});
 	},
-	createTodo: function (data,callback){
+	createTodo: function (data, callback){
 		request
 		.post(BASE_URL)
 		.send(data)
@@ -31,13 +31,28 @@ const API = {
 			}
 		});
 	},
-	deleteTodo: function (id,callback){
+	deleteTodo: function (id, callback){
 		request
 		.delete(BASE_URL+'/'+id)
 		.set('Accept', 'application/json')
 		.end(function(err, res){
 			if(res.ok){
 				callback(id)
+			}else{
+				alert("Error! Pleasecheck console")
+				console.log(err);
+			}
+		});
+	},
+	updateTodo: function (data, callback){
+		let id = data.id
+		request
+		.put(BASE_URL+'/'+id)
+		.send(data)
+		.set('Accept', 'application/json')
+		.end(function(err, res){
+			if(res.ok){
+				callback(res.ok)
 			}else{
 				alert("Error! Pleasecheck console")
 				console.log(err);

@@ -2,49 +2,58 @@ import {EventEmitter} from 'events';
 import dispatcher from '../dispatcher/dispatcher'
 import API from './API'
 
-var _todos =  []
 
 class TodoStore extends EventEmitter{
 
+	constructor(){
+		super()
+		this.todos = []
+	}
+
 	createTodo(title){
-		let todo = {
-			title,
-			isComplete: false
-		}
+		let todo = {title, isComplete: false}
+		console.log(todo);
 		API.createTodo(todo, (function(data){
-			if(_todos.length){
-				_todos.push(data)
-			}else{
-				_todos = [];
-				_todos.push(data)
-			}
+			this.todos.push(data)
 			this.emit("change");
 		}).bind(this))
 	}
 
 	deleteTodo(id){
 		API.deleteTodo(id, (function(id){
-			let todoToComplete = _todos.find(x=> x.id === id)
-			_todos.pop(todoToComplete);
+			let todoToPop = this.todos.find(x=> x.id === id)
+			this.todos.pop(todoToPop);
 			this.emit("change");
 		}).bind(this));
 	}
 
-	loadTodos(){
-		API.getTodos((function(data){
-			_todos = data;
-			this.emit("change");
-		}).bind(this));
+	updateTodo(data){
+		API.updateTodo(data, (function(updated){
+			if(updated){
+				let index;
+				this.todos.map((v,i) =>  v.id === data.id ? index = i : null)
+				this.todos[index] = data;
+				this.emit("change");
+			}
+		}).bind(this))
 	}
 
 	getTodos(){
-		return _todos;
+		if(this.todos.length === 0){
+			API.getTodos((function(data){
+				this.todos = data;
+				this.emit("change");
+			}).bind(this));
+		}else{
+			return this.todos
+		}
 	}
 
 	handleAction(action){
+		console.log(action)
 		switch (action.type){
 			case "LOAD_TODO": {
-				this.loadTodos(action.data)
+				this.getTodos()
 			}
 			break;
 			case "CREATE_TODO": {
@@ -53,6 +62,10 @@ class TodoStore extends EventEmitter{
 			break;
 			case "DELETE_TODO":{
 				this.deleteTodo(action.id)
+			}
+			break;
+			case "UPDATE_TODO":{
+				this.updateTodo(action.data)
 			}
 			break;
 		}
