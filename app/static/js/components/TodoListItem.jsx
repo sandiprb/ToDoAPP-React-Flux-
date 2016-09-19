@@ -27,6 +27,7 @@ class TodoListItem extends React.Component {
 			<div className={(!todo.isComplete ? "item__pending" : "item__done") + " list__item" }>
 				<input ref="checkBoxIsComplete"
 					type="checkbox"
+					checked={todo.isComplete}
 					onChange={this.updateTodo.bind(this, todo)}/>
 				{todo.title}
 				<button className="btn__close pull-right"
