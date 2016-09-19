@@ -10,7 +10,6 @@ gulp.task('build', function() {
 	atImport({path: ['./app/static/pcss']}),
 	require('postcss-simple-vars'),
 	require('postcss-nested'),
-	require('css-mqpacker'),
 	autoprefixer({browsers: ['last 2 version']}),
 	];
 	return gulp.src('./app/static/pcss/[^_]*.css')
