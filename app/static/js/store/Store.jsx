@@ -1,6 +1,7 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import dispatcher from '../dispatcher/dispatcher'
 import API from './API'
+import TodoConst from '../constants/TodoConstants';
 
 
 class TodoStore extends EventEmitter{
@@ -50,21 +51,20 @@ class TodoStore extends EventEmitter{
 	}
 
 	handleAction(action){
-		console.log(action)
 		switch (action.type){
-			case "LOAD_TODO": {
+			case TodoConst.LOAD_TODO: {
 				this.getTodos()
 			}
 			break;
-			case "CREATE_TODO": {
+			case TodoConst.CREATE_TODO: {
 				this.createTodo(action.title)
 			}
 			break;
-			case "DELETE_TODO":{
+			case TodoConst.DELETE_TODO:{
 				this.deleteTodo(action.id)
 			}
 			break;
-			case "UPDATE_TODO":{
+			case TodoConst.UPDATE_TODO:{
 				this.updateTodo(action.data)
 			}
 			break;
